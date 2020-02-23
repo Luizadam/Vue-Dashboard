@@ -56,6 +56,11 @@ export default new Router({
           path: '/register',
           name: 'register',
           component: () => import(/* webpackChunkName: "demo" */ './views/Register.vue')
+        },
+        {
+          path:'/forgotpass',
+          name:'forgotpass',
+          component: () => import(/* webpackChunkName: "demo" */ './views/forgotpassword.vue')
         }
       ]
     }
