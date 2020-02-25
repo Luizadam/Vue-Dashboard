@@ -80,16 +80,27 @@ export default {
       };
       try {
         const response = await axios({
-          method: "get",
+          method: "post",
           url: "https://x-user-api.mindzzle.com/registrations/api/login/",
           params: {
             email: credentials.email,
             password: credentials.password
           },
+          // watch: {
+          //   users: {
+          //     handler() {
+          //       localStorage.setItem('email', JSON.stringify(this.params.email));
+          //       localStorage.setItem('password', JSON.stringify(this.params.password))
+          //     },
+          //     deep: true
+          //   }
+          // },
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json;charset=UTF-8"
           }
+
+
           // credentials.email + "&&password=",
           //   JSON.stringify(credentials)}
         });
@@ -102,15 +113,20 @@ export default {
           user.email == credentials.email &&
           user.password == credentials.password
         ) {
-          console.log({
-            api_status: "success",
-            name: user.name,
-            username: user.username,
-            email: user.email
-          });
+          // console.log({
+          //   status: "success",
+          //   name: user.name,
+          //   username: user.username,
+          //   email: user.email
+          // });
+          alert('email dan password sesuai')
         } else {
           // return { status: "failed" };
+          // console.log('credentials password ' + credentials.password)
           console.log(user)
+          alert('email dan password tidak sesuai')
+
+          // console.log(user)
         }
       } catch (error) {
         console.error("whoops " + error);
@@ -122,6 +138,7 @@ export default {
       if (response.api_status === "failed") {
         return alert("Failed to login");
       }
+      
 
       await alert("Success login!");
     }
