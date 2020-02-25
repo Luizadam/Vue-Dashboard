@@ -7,14 +7,6 @@
             <small></small>
           </div>
           <div class="btn-wrapper text-center">
-            <!-- <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/github.svg"></span>
-                                <span class="btn-inner--text">Github</span>
-                            </a>
-                            <a href="#" class="btn btn-neutral btn-icon">
-                                <span class="btn-inner--icon"><img src="img/icons/common/google.svg"></span>
-                                <span class="btn-inner--text">Google</span>
-            </a>-->
             <img src="../assets/logobaru.png" style="width:50%" />
           </div>
         </div>
@@ -35,11 +27,8 @@
               v-model="model.password"
             ></base-input>
 
-            <base-checkbox class="custom-control-alternative">
-              <span class="text-muted">Remember me</span>
-            </base-checkbox>
             <div class="text-center">
-              <base-button type="primary" nativeType="submit" class="my-4">Sign in</base-button>
+              <base-button type="primary" nativeType="submit" class="my-4">LOGIN</base-button>
             </div>
           </form>
         </div>
@@ -80,67 +69,33 @@ export default {
       };
       try {
         const response = await axios({
-          method: "post",
+          method: "get",
           url: "https://x-user-api.mindzzle.com/registrations/api/login/",
           params: {
             email: credentials.email,
             password: credentials.password
           },
-          // watch: {
-          //   users: {
-          //     handler() {
-          //       localStorage.setItem('email', JSON.stringify(this.params.email));
-          //       localStorage.setItem('password', JSON.stringify(this.params.password))
-          //     },
-          //     deep: true
-          //   }
-          // },
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json;charset=UTF-8"
+              Accept: "application/json",
+              "Content-Type": "application/json;charset=UTF-8",
+          }
+        });
+
+          const resp = response.data;
+
+          if (resp.api_status === 200) {
+              this.$router.push('/dashboard')
+          }
+          else {
+
           }
 
-
-          // credentials.email + "&&password=",
-          //   JSON.stringify(credentials)}
-        });
-        
-        const user = response.data;
-        
-          // console.log('respons data', response.data);
-
-        if (
-          user.email == credentials.email &&
-          user.password == credentials.password
-        ) {
-          // console.log({
-          //   status: "success",
-          //   name: user.name,
-          //   username: user.username,
-          //   email: user.email
-          // });
-          alert('email dan password sesuai')
-        } else {
-          // return { status: "failed" };
-          // console.log('credentials password ' + credentials.password)
-          console.log(user)
-          alert('email dan password tidak sesuai')
-
-          // console.log(user)
-        }
       } catch (error) {
         console.error("whoops " + error);
       }
     },
     async validate() {
-      let response = await this.login(this.model.email, this.model.password);
-
-      if (response.api_status === "failed") {
-        return alert("Failed to login");
-      }
-      
-
-      await alert("Success login!");
+      await this.login(this.model.email, this.model.password);
     }
   }
 };
